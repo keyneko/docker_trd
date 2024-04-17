@@ -34,14 +34,14 @@ sudo docker images
 $ sudo docker pull yidadaa/chatgpt-next-web
 $ sudo docker run -d -p 3000:3000 \
 	-e BASE_URL=https://api.openai-hub.com \
-	-e OPENAI_API_KEY=sk-1Y91GtNHfVEdvJDJ15B83eF300A7426bA64a167e3c5f8b36 \
+	-e OPENAI_API_KEY=sk-xxxxx \
 	-e CODE=a1234 \
 	yidadaa/chatgpt-next-web
 
 # 部署lobehub
 $ sudo docker pull lobehub/lobe-chat
 $ sudo docker run -d -p 3210:3210 \
-	-e OPENAI_API_KEY=sk-1Y91GtNHfVEdvJDJ15B83eF300A7426bA64a167e3c5f8b36 \
+	-e OPENAI_API_KEY=sk-xxxxx \
 	-e ACCESS_CODE=a1234 \
 	--name lobe-chat \
 	lobehub/lobe-chat
@@ -56,4 +56,47 @@ sudo vim /etc/docker/daemon.json
 }
 systemctl daemon-reload
 systemctl restart docker
+```
+
+```bash
+# Ubuntu 18.04安装clash-verge 
+sudo dpkg -i clash-verge_1.5.2_amd64.deb
+# 提示错误 version `GLIBC_2.28' not found (required by clash-verge)
+sudo dpkg -r clash-verge
+
+# TODO: 只能本地编译打包了, 基于tauri框架
+https://tauri.app/v1/guides/getting-started/prerequisites/#setting-up-linux
+git clone https://github.com/clash-verge-rev/clash-verge-rev.git
+
+
+# 本地安装ShellCrash
+git clone https://github.com/juewuy/ShellCrash.git
+cd ShellCrash
+# root用户安装
+sudo su
+bash ./install.sh
+source /etc/profile &> /dev/null 
+crash
+crash -h
+crash -u
+```
+
+```bash
+# 部署esphome
+docker pull ghcr.io/esphome/esphome
+
+# 创建项目
+docker run --rm -v "${PWD}":/config -it ghcr.io/esphome/esphome wizard livingroom.yaml
+
+switch:
+  - platform: gpio
+    name: "Living Room Dehumidifier"
+    pin: 5
+
+# 上传固件
+docker run --rm --privileged -v "${PWD}":/config --device=/dev/ttyUSB0 -it ghcr.io/esphome/esphome run livingroom.yaml
+
+# 仪表板
+docker run --rm --net=host -v "${PWD}":/config -it ghcr.io/esphome/esphome
+
 ```
