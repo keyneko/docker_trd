@@ -42,9 +42,19 @@ $ sudo docker run -d -p 3000:3000 \
 $ sudo docker pull lobehub/lobe-chat
 $ sudo docker run -d -p 3210:3210 \
 	-e OPENAI_API_KEY=sk-xxxxx \
+	-e OPENAI_PROXY_URL=https://api.openai-proxy.com/v1 \
 	-e ACCESS_CODE=a1234 \
 	--name lobe-chat \
 	lobehub/lobe-chat
+
+# 列出所有容器
+sudo docker ps -a 
+# 删除窗口
+sudo docker rm 8321e07c0ff9
+# 运行已停止的容器
+sudo docker start 4b2dfddad1f5
+# 连接到终端
+sudo docker attach 4b2dfddad1f5
 
 # 如果TLS handshake timeout（Docker镜像拉取错误）
 sudo vim /etc/docker/daemon.json
