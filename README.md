@@ -28,6 +28,8 @@ sudo docker run hello-world
 sudo docker version
 # 查看镜像
 sudo docker images
+# 删除镜像
+sudo docker rmi hello-world 
 
 
 # 部署nextweb
@@ -49,7 +51,7 @@ $ sudo docker run -d -p 3210:3210 \
 
 # 列出所有容器
 sudo docker ps -a 
-# 删除窗口
+# 删除容器
 sudo docker rm 8321e07c0ff9
 # 运行已停止的容器
 sudo docker start 4b2dfddad1f5
