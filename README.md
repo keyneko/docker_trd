@@ -94,6 +94,18 @@ crash -u
 ```
 
 ```bash
+# 部署webdav
+sudo docker pull bytemark/webdav
+sudo docker run --restart always \
+    -e AUTH_TYPE=Digest \
+    -e USERNAME=keyneko \
+    -e PASSWORD=a1234 \
+    -p 8080:80 \
+    -v /srv/dav:/var/lib/dav \
+    -d bytemark/webdav
+```
+
+```bash
 # 部署esphome
 docker pull ghcr.io/esphome/esphome
 
