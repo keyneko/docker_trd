@@ -139,3 +139,10 @@ docker run -d --privileged=true \
 	-p 13000:3000 \
 	-v /usr/local/gitea:/data gitea/gitea:latest
 ```
+
+# 部署Node-RED
+```bash
+docker pull nodered/node-red
+chmod 0777 /usr/local/nodered
+docker run -itd -p 1880:1880 -v /usr/local/nodered:/data -e TZ=Asia/Shanghai --name nodered nodered/node-red:latest
+```
