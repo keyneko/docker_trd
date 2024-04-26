@@ -146,3 +146,17 @@ docker pull nodered/node-red
 chmod 0777 /usr/local/nodered
 docker run -itd -p 1880:1880 -v /usr/local/nodered:/data -e TZ=Asia/Shanghai --name nodered nodered/node-red:latest
 ```
+
+# 部署home assistant
+```bash
+sudo docker pull homeassistant/home-assistant
+sudo mkdir -p /data/homeassistant/config
+sudo chmod -R 777 /data/homeassistant/
+sudo docker run -d \
+  --restart always \
+  --name homeassistant  \
+  -v /data/homeassistant/config:/config \
+  -e TZ=Asia/Shanghai   \
+  -p 8123:8123   \
+  homeassistant/home-assistant:latest
+```
