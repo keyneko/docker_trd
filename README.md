@@ -1,4 +1,4 @@
-# Ubuntu安装Docker
+# 安装Docker
 ```bash
 # 卸载ubuntu自带的旧版本docker
 $ apt-get remove docker docker-engine docker.io containerd runc
@@ -29,25 +29,7 @@ sudo docker version
 # 查看镜像
 sudo docker images
 # 删除镜像
-sudo docker rmi hello-world 
-
-
-# 部署nextweb
-$ sudo docker pull yidadaa/chatgpt-next-web
-$ sudo docker run -d -p 3000:3000 \
-	-e BASE_URL=https://api.openai-hub.com \
-	-e OPENAI_API_KEY=sk-xxxxx \
-	-e CODE=a1234 \
-	yidadaa/chatgpt-next-web
-
-# 部署lobehub
-$ sudo docker pull lobehub/lobe-chat
-$ sudo docker run -d -p 3210:3210 \
-	-e OPENAI_API_KEY=sk-xxxxx \
-	-e OPENAI_PROXY_URL=https://api.openai-proxy.com/v1 \
-	-e ACCESS_CODE=a1234 \
-	--name lobe-chat \
-	lobehub/lobe-chat
+sudo docker rmi hello-world
 
 # 列出所有容器
 sudo docker ps -a 
@@ -70,6 +52,28 @@ systemctl daemon-reload
 systemctl restart docker
 ```
 
+# 部署nextweb
+```bash
+$ sudo docker pull yidadaa/chatgpt-next-web
+$ sudo docker run -d -p 3000:3000 \
+	-e BASE_URL=https://api.openai-hub.com \
+	-e OPENAI_API_KEY=sk-xxxxx \
+	-e CODE=a1234 \
+	yidadaa/chatgpt-next-web
+```
+
+# 部署lobehub
+```bash
+$ sudo docker pull lobehub/lobe-chat
+$ sudo docker run -d -p 3210:3210 \
+	-e OPENAI_API_KEY=sk-xxxxx \
+	-e OPENAI_PROXY_URL=https://api.openai-proxy.com/v1 \
+	-e ACCESS_CODE=a1234 \
+	--name lobe-chat \
+	lobehub/lobe-chat
+```
+
+# 安装clash-verge 
 ```bash
 # Ubuntu 18.04安装clash-verge 
 sudo dpkg -i clash-verge_1.5.2_amd64.deb
@@ -79,9 +83,10 @@ sudo dpkg -r clash-verge
 # TODO: 只能本地编译打包了, 基于tauri框架
 https://tauri.app/v1/guides/getting-started/prerequisites/#setting-up-linux
 git clone https://github.com/clash-verge-rev/clash-verge-rev.git
+```
 
-
-# 本地安装ShellCrash
+# 安装ShellCrash
+```bash
 git clone https://github.com/juewuy/ShellCrash.git
 cd ShellCrash
 # root用户安装
@@ -93,8 +98,8 @@ crash -h
 crash -u
 ```
 
-```bash
 # 部署webdav
+```bash
 sudo docker pull bytemark/webdav
 sudo docker run --restart always \
     -e AUTH_TYPE=Digest \
@@ -105,8 +110,8 @@ sudo docker run --restart always \
     -d bytemark/webdav
 ```
 
-```bash
 # 部署esphome
+```bash
 docker pull ghcr.io/esphome/esphome
 
 # 创建项目
@@ -122,5 +127,15 @@ docker run --rm --privileged -v "${PWD}":/config --device=/dev/ttyUSB0 -it ghcr.
 
 # 仪表板
 docker run --rm --net=host -v "${PWD}":/config -it ghcr.io/esphome/esphome
+```
 
+# 部署gitea
+```
+sudo docker pull gitea/gitea
+docker run -d --privileged=true \
+	--restart=always \
+	--name=gitea \
+	-p 10022:22 \
+	-p 13000:3000 \
+	-v /usr/local/gitea:/data gitea/gitea:latest
 ```
