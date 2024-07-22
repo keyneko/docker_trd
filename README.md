@@ -142,9 +142,12 @@ docker run -d --privileged=true \
 
 # 部署Node-RED
 ```bash
-docker pull nodered/node-red
+docker pull nodered/node-red:latest
 chmod 0777 /usr/local/nodered
 docker run -itd -p 1880:1880 -v /usr/local/nodered:/data -e TZ=Asia/Shanghai --name nodered nodered/node-red:latest
+# 查看容器内node版本
+docker exec -it a6d0731e22bb /bin/bash
+node -v
 ```
 
 # 部署home assistant
