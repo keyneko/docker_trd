@@ -112,10 +112,10 @@ sudo docker run --restart always \
 
 # 部署esphome
 ```bash
-docker pull ghcr.io/esphome/esphome
+docker pull esphome/esphome
 
 # 创建项目
-docker run --rm -v "${PWD}":/config -it ghcr.io/esphome/esphome wizard livingroom.yaml
+docker run --rm -v "${PWD}":/config -it esphome/esphome wizard livingroom.yaml
 
 switch:
   - platform: gpio
@@ -123,10 +123,10 @@ switch:
     pin: 5
 
 # 上传固件
-docker run --rm --privileged -v "${PWD}":/config --device=/dev/ttyUSB0 -it ghcr.io/esphome/esphome run livingroom.yaml
+docker run --rm --privileged -v "${PWD}":/config --device=/dev/ttyUSB0 -it esphome/esphome run livingroom.yaml
 
 # 仪表板
-docker run --rm --net=host -v "${PWD}":/config -it ghcr.io/esphome/esphome
+docker run --rm --net=host -v "${PWD}":/config -it esphome/esphome
 ```
 
 # 部署gitea
