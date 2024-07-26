@@ -162,4 +162,33 @@ sudo docker run -d \
   -e TZ=Asia/Shanghai   \
   -p 8123:8123   \
   homeassistant/home-assistant:latest
+
+# 安装hacs
+sudo docker exec -it 845f349a2372 bash
+845f349a2372:/config# wget -O - https://get.hacs.xyz | bash -
+```
+
+# 安装mosquitto
+```bash
+sudo docker pull eclipse-mosquitto
+sudo mkdir -p /usr/local/mosquitto/config
+sudo mkdir -p /usr/local/mosquitto/data
+sudo mkdir -p /usr/local/mosquitto/log
+sudo nano /usr/local/mosquitto/config/mosquitto.conf
+> persistence true
+> persistence_location /usr/local/mosquitto/data
+> log_dest file /usr/local/mosquitto/log/mosquitto.log
+> listener 9001
+> port 1883
+> allow_anonymous true
+
+sudo chmod -R 755 /usr/local/mosquitto
+sudo chmod -R 777 /usr/local/mosquitto/log
+
+sudo docker run -it --name=mosquitto --privileged \
+  -p 1883:1883 -p 9001:9001 \
+  -v /usr/local/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf \
+  -v /usr/local/mosquitto/data:/mosquitto/data \
+  -v /usr/local/mosquitto/log:/mosquitto/log \
+  -d eclipse-mosquitto
 ```
