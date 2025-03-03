@@ -214,4 +214,19 @@ ros2 run demo_nodes_cpp listener
 sudo docker run -it --rm osrf/ros:humble-desktop-full-jammy
 # 发布者节点
 ros2 run demo_nodes_cpp talker
+
+xhost +local:docker  # 允许本地Docker容器访问
+sudo docker run -it --rm \
+  --env DISPLAY=$DISPLAY \
+  --volume /tmp/.X11-unix:/tmp/.X11-unix \
+  osrf/ros:humble-desktop-full-jammy
+
+ros2 pkg executables turtlesim
+ls -l /opt/ros/humble/lib/turtlesim/
+ls -l /opt/ros/humble/setup.bash
+
+source /opt/ros/humble/setup.bash
+# 将图形输出发送Win10（可选）
+export DISPLAY=192.168.1.130:0.0
+ros2 run turtlesim turtlesim_node
 ```
