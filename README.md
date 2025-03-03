@@ -192,3 +192,13 @@ sudo docker run -it --name=mosquitto --privileged \
   -v /usr/local/mosquitto/log:/mosquitto/log \
   -d eclipse-mosquitto
 ```
+
+
+# 蒲公英访问端
+```bash
+sudo docker pull bestoray/pgyvpn
+sudo docker run -d --device=/dev/net/tun --net=host --cap-add=NET_ADMIN \
+  --env PGY_USERNAME="8687542:003" \
+  --env PGY_PASSWORD="kr3PbHJTekr5kFj" \
+  bestoray/pgyvpn
+```
