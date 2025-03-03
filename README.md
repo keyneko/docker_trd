@@ -202,3 +202,16 @@ sudo docker run -d --device=/dev/net/tun --net=host --cap-add=NET_ADMIN \
   --env PGY_PASSWORD="kr3PbHJTekr5kFj" \
   bestoray/pgyvpn
 ```
+
+# 部署ROS2
+```bash
+sudo docker pull osrf/ros:humble-desktop-full-jammy
+# 创建容器
+sudo docker run -it --rm osrf/ros:humble-desktop-full-jammy
+# 订阅者节点
+ros2 run demo_nodes_cpp listener
+# 再创建个容器
+sudo docker run -it --rm osrf/ros:humble-desktop-full-jammy
+# 发布者节点
+ros2 run demo_nodes_cpp talker
+```
