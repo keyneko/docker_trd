@@ -234,7 +234,6 @@ ros2 run turtlesim turtlesim_node
 sudo docker ps -a # 需要用NAMES
 sudo docker exec -it romantic_ptolemy /bin/bash
 source /opt/ros/humble/setup.bash
-ros2 topic list
 ros2 run turtlesim turtle_teleop_key
 
 # 或直接新打开容器
@@ -255,4 +254,48 @@ sudo docker run -it --rm \
   --net=ros-net \
   osrf/ros:humble-desktop-full-jammy \
   bash -c "source /opt/ros/humble/setup.bash && ros2 run turtlesim turtle_teleop_key"
+
+# 查看服务
+ros2 service list
+# 查看话题
+ros2 topic list
+
+# 启动时挂载脚本目录
+sudo docker run -it --rm \
+  --net=ros-net \
+  -v $(pwd):/app \
+  osrf/ros:humble-desktop-full-jammy
+source /opt/ros/humble/setup.bash
+# 小龟复位
+ros2 service call /reset std_srvs/srv/Empty "{}"
+python3 turtle_teleop.py
+```
+
+```python
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+
+class TurtleTeleop(Node):
+	def __init__(self):
+		super().__init__('turtle_teleop')
+		self.publisher_ = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
+		self.timer = self.create_timer(0.1, self.timer_callback) # 100 Hz
+
+	def timer_callback(self):
+		msg = Twist()
+		msg.linear.x = 0.5 # 2 m/s forward
+		msg.angular.z = 0.25 # No rotation
+		self.publisher_.publish(msg)
+		self.get_logger().info('Published velocity command')
+		
+def main(args=None):
+	rclpy.init(args=args)
+	turtle_teleop = TurtleTeleop()
+	rclpy.spin(turtle_teleop)
+	turtle_teleop.destroy_node()
+	rclpy.shutdown()
+
+if __name__ == '__main__':
+	main()
 ```
