@@ -229,4 +229,30 @@ source /opt/ros/humble/setup.bash
 # 将图形输出发送Win10（可选）
 export DISPLAY=192.168.1.130:0.0
 ros2 run turtlesim turtlesim_node
+
+# 新的终端使用docker exec命令连接已经运行的ROS2容器操作
+sudo docker ps -a # 需要用NAMES
+sudo docker exec -it romantic_ptolemy /bin/bash
+source /opt/ros/humble/setup.bash
+ros2 topic list
+ros2 run turtlesim turtle_teleop_key
+
+# 或直接新打开容器
+# 创建 Docker 网络
+sudo docker network create ros-net
+
+# 启动第一个容器（可视化节点）
+sudo docker run -it --rm \
+  --net=ros-net \
+  --name turtlesim-node \
+  --env DISPLAY=$DISPLAY \
+  --volume /tmp/.X11-unix:/tmp/.X11-unix \
+  osrf/ros:humble-desktop-full-jammy \
+  bash -c "source /opt/ros/humble/setup.bash && ros2 run turtlesim turtlesim_node"
+
+# 启动第二个容器（控制节点）
+sudo docker run -it --rm \
+  --net=ros-net \
+  osrf/ros:humble-desktop-full-jammy \
+  bash -c "source /opt/ros/humble/setup.bash && ros2 run turtlesim turtle_teleop_key"
 ```
