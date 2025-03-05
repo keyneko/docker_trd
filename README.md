@@ -335,4 +335,6 @@ data: Hello from ESP32-S3
 
 export ROS_DOMAIN_ID=1
 echo $ROS_DOMAIN_ID
+ros2 topic pub /from_ubuntu std_msgs/msg/String "{data: 'Hello from Ubuntu'}"
+
 ```
