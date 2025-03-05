@@ -306,8 +306,8 @@ sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 
 sudo docker pull microros/micro-ros-agent:humble
-sudo docker run -it --rm microros/micro-ros-agent:humble
-sudo docker run -it --rm --net=host microros/micro-ros-agent:humble udp4 --port 8888
-sudo docker run -it --rm --device=/dev/ttyACM0 microros/micro-ros-agent:humble serial --dev /dev/ttyACM0 -b 9600
-
+# 串口模式
+sudo docker run -it --rm --device=/dev/ttyUSB0 --net=host microros/micro-ros-agent:humble serial --dev /dev/ttyUSB0 -b 115200 -v4
+# WiFi模式
+sudo docker run -it --rm --net=host microros/micro-ros-agent:humble udp4 --port 8888 -v6
 ```
