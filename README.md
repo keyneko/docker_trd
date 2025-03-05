@@ -308,6 +308,31 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 sudo docker pull microros/micro-ros-agent:humble
 # 串口模式
 sudo docker run -it --rm --device=/dev/ttyUSB0 --net=host microros/micro-ros-agent:humble serial --dev /dev/ttyUSB0 -b 115200 -v4
+sudo docker run -it --rm -v /dev:/dev -v /dev/shm:/dev/shm --privileged --net=host microros/micro-ros-agent:humble serial --dev /dev/ttyUSB0 -v6
 # WiFi模式
 sudo docker run -it --rm --net=host microros/micro-ros-agent:humble udp4 --port 8888 -v6
+
+# 启动容器
+sudo docker run -it --rm \
+  --net=host \
+  -v $(pwd):/app \
+  osrf/ros:humble-desktop-full-jammy
+source /opt/ros/humble/setup.bash
+ros2 topic list
+
+# 订阅话题
+ros2 topic echo /esp32_s3_chatter
+data: Hello from ESP32-S3
+---
+data: Hello from ESP32-S3
+---
+data: Hello from ESP32-S3
+---
+data: Hello from ESP32-S3
+---
+data: Hello from ESP32-S3
+---
+
+export ROS_DOMAIN_ID=1
+echo $ROS_DOMAIN_ID
 ```
