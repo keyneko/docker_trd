@@ -316,6 +316,9 @@ sudo docker run -it --rm -v /dev:/dev -v /dev/shm:/dev/shm --privileged --net=ho
 # 启动容器
 sudo docker run -it --rm \
   --net=host \
+  --env DISPLAY=$DISPLAY \
+  --volume /tmp/.X11-unix:/tmp/.X11-unix \
+  --privileged \
   -v $(pwd):/app \
   osrf/ros:humble-desktop-full-jammy
 source /opt/ros/humble/setup.bash
@@ -334,7 +337,8 @@ data: Hello from ESP32-S3
 data: Hello from ESP32-S3
 ---
 
-export ROS_DOMAIN_ID=1
+# 设置域
+export ROS_DOMAIN_ID=8
 echo $ROS_DOMAIN_ID
 ros2 topic pub /from_ubuntu std_msgs/msg/String "{data: 'Hello from Ubuntu'}"
 
