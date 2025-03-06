@@ -311,6 +311,7 @@ sudo docker run -it --rm --device=/dev/ttyUSB0 --net=host microros/micro-ros-age
 sudo docker run -it --rm -v /dev:/dev -v /dev/shm:/dev/shm --privileged --net=host microros/micro-ros-agent:humble serial --dev /dev/ttyUSB0 -v6
 # WiFi模式
 sudo docker run -it --rm --net=host microros/micro-ros-agent:humble udp4 --port 8888 -v6
+sudo docker run -it --rm -v /dev:/dev -v /dev/shm:/dev/shm --privileged --net=host microros/micro-ros-agent:humble udp4 --port 8888 -v6
 
 # 启动容器
 sudo docker run -it --rm \
@@ -336,5 +337,18 @@ data: Hello from ESP32-S3
 export ROS_DOMAIN_ID=1
 echo $ROS_DOMAIN_ID
 ros2 topic pub /from_ubuntu std_msgs/msg/String "{data: 'Hello from Ubuntu'}"
+
+# ROS2创建功能包
+ros2 pkg create my_chatter --build-type ament_python --dependencies rclpy std_msgs
+# 构建并运行节点
+colcon build --packages-select my_chatter
+source install/setup.bash
+ros2 run my_chatter ubuntu_publisher
+ros2 run my_chatter esp32_subscriber
+# 手动发送消息
+ros2 topic pub /from_esp32 std_msgs/msg/String "data: 'hello from esp32'" --once
+# 查看活跃话题
+ros2 topic list
+ros2 topic echo /from_ubuntu
 
 ```
