@@ -355,4 +355,6 @@ ros2 topic pub /from_esp32 std_msgs/msg/String "data: 'hello from esp32'" --once
 ros2 topic list
 ros2 topic echo /from_ubuntu
 
+# 键盘控制
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r cmd_vel:=/cmd_vel
 ```
