@@ -50,6 +50,22 @@ sudo vim /etc/docker/daemon.json
 }
 systemctl daemon-reload
 systemctl restart docker
+
+# 手动分配 IP 地址
+sudo dhclient ens33
+
+# 更新网络配置
+sudo nano /etc/network/interfaces
+	# interfaces(5) file used by ifup(8) and ifdown(8)
+	auto lo
+	iface lo inet loopback
+	auto ens33
+	iface ens33 inet dhcp
+
+# 使用 NetworkManager
+sudo nmcli dev set ens33 managed yes
+sudo systemctl restart networking
+sudo systemctl restart NetworkManager
 ```
 
 # 部署nextweb
