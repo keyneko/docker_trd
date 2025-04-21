@@ -54,6 +54,11 @@ systemctl restart docker
 # 手动分配 IP 地址
 sudo dhclient ens33
 
+# 修改DNS
+sudo nano /etc/resolv.conf
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+
 # 更新网络配置
 sudo nano /etc/network/interfaces
 	# interfaces(5) file used by ifup(8) and ifdown(8)
