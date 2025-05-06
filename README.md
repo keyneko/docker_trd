@@ -196,12 +196,12 @@ sudo mkdir -p /usr/local/mosquitto/config
 sudo mkdir -p /usr/local/mosquitto/data
 sudo mkdir -p /usr/local/mosquitto/log
 sudo nano /usr/local/mosquitto/config/mosquitto.conf
-> persistence true
-> persistence_location /usr/local/mosquitto/data
-> log_dest file /usr/local/mosquitto/log/mosquitto.log
-> listener 9001
-> port 1883
-> allow_anonymous true
+	persistence true
+	persistence_location /usr/local/mosquitto/data
+	log_dest file /usr/local/mosquitto/log/mosquitto.log
+	listener 9001
+	port 1883
+	allow_anonymous true
 
 sudo chmod -R 755 /usr/local/mosquitto
 sudo chmod -R 777 /usr/local/mosquitto/log
